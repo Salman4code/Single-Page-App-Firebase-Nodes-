@@ -45,6 +45,11 @@ route.post('/', function(request, response) {
   request.checkBody("mobile", "Mobile number is not valid").matches(reg);
   var errors = request.validationErrors();
   if (errors) {
+    console.log(errors);
+    error.forEach(function(data)
+    {
+      console.log(data);
+    });
     response.send(errors);
     return;
   }
@@ -57,11 +62,13 @@ route.post('/', function(request, response) {
         password: request.body.password,
         mobile: request.body.mobile
       });
-
+      request.session={"email":UserEmail};
+      console.log(request.session);
       response.send({
         "status": true,
         "message": "Signup Successfully"
       });
+
     } else {
       response.send({"status":false,"message":"Email_Id already Exist"});
     }
